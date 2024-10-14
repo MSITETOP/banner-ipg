@@ -8,7 +8,18 @@ import time
 from base64 import b64decode
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-seed = random.randint(1000000, 9999999)
+
+if st.session_state.get("seed", False): 
+    seed = st.session_state["seed"]
+else:
+    seed = random.randint(10000000, 99999999)
+    st.session_state["seed"] = seed
+
+if st.session_state.get("prompt_txt", False): 
+    prompt_txt = st.session_state["prompt_txt"]
+else:
+    prompt_txt = ""
+    st.session_state["prompt_txt"] = prompt_txt
 
 st.set_page_config(page_title="AI генерация баннеров",layout="wide")
 
@@ -90,13 +101,16 @@ def getImage(prompt, w, h, s):
 
 
 txt = st.text_area(label="Текст статьи для генерации промпта", value="")
-prompt_txt = ""
 
 if st.button("Создать промпт"):
     prompt_txt = create_prompt(txt)
+    st.session_state["prompt_txt"] = prompt_txt
 
 seed = st.text_input(label="Зерно (seed) — это число, на основе которого будет происходить генерация изображения. Вы можете сами указать число или задать случайное значение. При одинаковых промте и зерне результаты генераций будут одинаковыми.", value=seed)
+st.session_state["seed"] = seed
+
 prompt_txt = st.text_area(label="Полученный промпт (его можно отредактировать перед генерацией)", max_chars=500, value=prompt_txt)
+st.session_state["prompt_txt"] = prompt_txt
 
 if st.button("Создать баннер 1920х400"):
     i = getImage(prompt_txt, 1920, 400, seed)
