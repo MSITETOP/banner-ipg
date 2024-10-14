@@ -124,9 +124,9 @@ st.session_state["prompt_txt"] = prompt_txt
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    btn1 = st.button("Создать баннер 2560х500")
-    btn2 = st.button("Создать баннер 400х800")
-    btn3 = st.button("Создать баннер 400х400")
+    btn1 = st.button("Создать баннер YandexArt 2560х500")
+    btn2 = st.button("Создать баннер YandexArt 400х800")
+    btn3 = st.button("Создать баннер YandexArt 400х400")
 
 with col2:
     btn4 = st.button("Создать баннер DALLE 2560х500")
