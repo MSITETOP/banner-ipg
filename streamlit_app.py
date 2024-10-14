@@ -99,12 +99,12 @@ def getImage(prompt, w, h, s):
             print(f"Ошибка при получении результата: {result_response.status_code}, {result_response.text}")
     return False
 
-def getImageDalle(prompt, w, h):
+def getImageDalle(prompt, w, h, quality = "standard"):
     response = client.images.generate(
         model="dall-e-3",
         prompt=prompt,
         size=f"{w}x{h}",
-        quality="standard",
+        quality=quality,
         n=1,
     )
     return response.data[0].url
@@ -122,7 +122,7 @@ st.session_state["seed"] = seed
 prompt_txt = st.text_area(label="Полученный промпт (его можно отредактировать перед генерацией)", max_chars=500, value=prompt_txt)
 st.session_state["prompt_txt"] = prompt_txt
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 with col1:
     btn1 = st.button("Создать баннер 2560х500")
     btn2 = st.button("Создать баннер 400х800")
@@ -133,6 +133,10 @@ with col2:
     btn5 = st.button("Создать баннер DALLE 400х800")
     btn6 = st.button("Создать баннер DALLE 400х400")
 
+with col3:
+    btn7 = st.button("Создать баннер DALLE HD 2560х500")
+    btn8 = st.button("Создать баннер DALLE HD 400х800")
+    btn9 = st.button("Создать баннер DALLE HD 400х400")
 
 if btn1:
     i1 = getImage(prompt_txt, 2560, 500, seed)
@@ -151,5 +155,14 @@ if btn5:
     st.html(f"<img style='max-width: 100%;' src='{i2}'>")
 if btn6:
     i3 = getImageDalle(prompt_txt, 1024, 1024)
+    st.html(f"<img style='max-width: 100%;' src='{i3}'>")
+if btn7:
+    i1 = getImageDalle(prompt_txt, 1792, 1024, "hd")
+    st.html(f"<img style='max-width: 100%;' src='{i1}'>")
+if btn8:
+    i2 = getImageDalle(prompt_txt, 1024, 1792, "hd")
+    st.html(f"<img style='max-width: 100%;' src='{i2}'>")
+if btn9:
+    i3 = getImageDalle(prompt_txt, 1024, 1024, "hd")
     st.html(f"<img style='max-width: 100%;' src='{i3}'>")
 
