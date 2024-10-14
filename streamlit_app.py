@@ -113,11 +113,11 @@ prompt_txt = st.text_area(label="Полученный промпт (его мо�
 st.session_state["prompt_txt"] = prompt_txt
 
 if st.button("Создать баннер 1920х400"):
-    i = getImage(prompt_txt, 1920, 400, seed)
-    st.html(f"<img src='data:image/jpeg;base64,{i}'>")
+    i1 = getImage(prompt_txt, 1920, 400, seed)
+    st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i}'>")
 if st.button("Создать баннер 400х800"):
-    i = getImage(prompt_txt, 400, 800, seed)
-    st.html(f"<img src='data:image/jpeg;base64,{i}'>")
+    i2 = getImage(prompt_txt, 400, 800, seed)
+    st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i2}'>")
 if st.button("Создать баннер 400х400"):
-    i = getImage(prompt_txt, 400, 400, seed)
-    st.html(f"<img src='data:image/jpeg;base64,{i}'>")
+    i3 = getImage(prompt_txt, 400, 400, seed)
+    st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i3}'>")
