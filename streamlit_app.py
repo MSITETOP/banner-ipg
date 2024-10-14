@@ -106,7 +106,7 @@ if st.button("Создать промпт"):
     prompt_txt = create_prompt(txt)
     st.session_state["prompt_txt"] = prompt_txt
 
-seed = st.text_input(label="Зерно (seed) — это число, на основе которого будет происходить генерация изображения. Вы можете сами указать число или задать случайное значение. При одинаковых промте и зерне результаты генераций будут одинаковыми.", value=seed)
+seed = st.text_input(label="Зерно (seed) — это число, на основе которого будет происходить генерация изображения. При одинаковых промте и зерне результаты генераций будут одинаковыми.", value=seed)
 st.session_state["seed"] = seed
 
 prompt_txt = st.text_area(label="Полученный промпт (его можно отредактировать перед генерацией)", max_chars=500, value=prompt_txt)
@@ -114,7 +114,7 @@ st.session_state["prompt_txt"] = prompt_txt
 
 if st.button("Создать баннер 1920х400"):
     i1 = getImage(prompt_txt, 1920, 400, seed)
-    st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i}'>")
+    st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i1}'>")
 if st.button("Создать баннер 400х800"):
     i2 = getImage(prompt_txt, 400, 800, seed)
     st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i2}'>")
