@@ -127,7 +127,7 @@ def to_base64_image(buf):
     img_str = b64encode(buf.getvalue()).decode("utf-8")   
     return img_str
 
-def img_scale(buf, prompt):
+def img_scale(buf, prompt, w, h):
     img = Image.open(buf)
     # Рассчитываем новую ширину с учетом пропорций
     new_height = 400
@@ -251,9 +251,9 @@ with col1:
 with col2:
     h = st.text_input(label="Height", value="400")
 with col3:
-    st.write("  ")
+    st.caption("	 ")
     btn10 = st.button("Изменить размеры изображения")
     
 if btn10:
-    i = img_scale(i, prompt_txt)
+    i = img_scale(i, prompt_txt, w, h)
     st.html(f"<img style='max-width: 100%;' src='data:image/jpeg;base64,{i}'>")
