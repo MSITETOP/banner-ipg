@@ -251,6 +251,7 @@ with col1:
 with col2:
     h = st.text_input(label="Height", value="400")
 with col3:
+    st.write("  ")
     btn10 = st.button("Изменить размеры изображения")
     
 if btn10:
