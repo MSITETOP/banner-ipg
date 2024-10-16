@@ -33,11 +33,10 @@ else:
 st.set_page_config(page_title="AI генерация баннеров",layout="wide")
 
 def create_prompt(txt):
-    response = client.chat.completions.create(
-        model="gpt-4o-mini", #"o1-mini"
-        messages=[
+    m = [
             {
             "role": "user",
+            "attachments": st.session_state.attach,
             "content": [
                 {
                 "type": "text",
@@ -45,7 +44,11 @@ def create_prompt(txt):
                 }
             ]
             }
-        ]
+    ]
+    print(m)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini", #"o1-mini"
+        messages=m
     )
     print(response.choices[0].message.content)
     return response.choices[0].message.content[:500]
@@ -193,6 +196,22 @@ def img_scale(buf, prompt, w, h):
 
     return img_str
 
+uploaded_files = st.file_uploader(
+    "Загрузи изображения для анализа", accept_multiple_files = True, type=(".png", ".jpg", ".jpeg", ".webp")
+)
+
+if uploaded_files:
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+            st.session_state.attach = []
+            with st.spinner('Загрузка документов...'):
+                for uploaded_file in uploaded_files:
+                    message_file = client.files.create(file=uploaded_file, purpose="assistants")
+                    st.session_state.attach.append({ 
+                        "file_id": message_file.id, 
+                        "tools": [{"type": "file_search"}] 
+                    })
+            st.success(f"Документы загружены! {message_file}")
 
 txt = st.text_area(label="Текст статьи для генерации промпта", value="")
 
